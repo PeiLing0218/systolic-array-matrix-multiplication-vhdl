@@ -50,11 +50,13 @@ directly in the testbench files — no changes needed in the design files.
 ## Simulation Results
 
 **PE** — `tb_PE.vhd` applies known operand pairs and confirms correct multiply-accumulate output.
+![PE simulation output](docs/pe_output.png)
 
 **Systolic array** — `tb_Systolic_Array.vhd` applies two 2×2 input
 matrices and checks all four output products (C11–C22) against
 hand-calculated reference values, cycle by cycle. Result: 100% match,
 correct pipelined timing confirmed.
+![Systolic array simulation output](docs/systolic_array_output.png)
 
 ## What This Demonstrates
 
