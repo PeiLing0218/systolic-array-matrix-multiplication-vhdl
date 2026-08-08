@@ -1,50 +1,63 @@
 # Systolic Array Matrix Multiplier (VHDL)
 
-A 2×2 systolic array for matrix multiplication, built from a reusable
-processing-element (PE) cell. Verified in Vivado at both the cell and
-array level against hand-calculated reference values.
+Two related VHDL designs exploring multiply-accumulate (MAC) hardware,
+run and verified as independent Vivado projects:
 
-## Repository Structure
+1. **PE** — a standalone processing element (13-bit MAC unit), verified
+   in isolation.
+2. **Systolic_Array** — a 2×2 systolic array built from a wider (16-bit)
+   `Systolic_Cell` variant, verified as a complete pipelined array.
+
+## 📁 Repository Structure
 
 ```text
 systolic-array-matrix-mult/
 ├── README.md
-├── src/                        Synthesizable VHDL design sources
-│   ├── pe_cell.vhd             Standalone processing element (MAC unit)
-│   ├── systolic_cell.vhd       PE variant wired for array interconnect
-│   └── systolic_array.vhd      Top-level 2×2 array (top module)
-├── sim/                        Testbenches
-│   ├── pe_cell_tb.vhd
-│   └── systolic_array_tb.vhd
-└── docs/                       Simulation output
-    ├── pe_cell_output.png
+├── PE/
+│   ├── PE.vhd                 Standalone processing element (MAC unit)
+│   └── tb_PE.vhd              Testbench
+├── Systolic_Array/
+│   ├── Systolic_Cell.vhd      PE variant wired for array interconnect
+│   ├── Systolic_Array.vhd     Top-level 2×2 array (top module)
+│   └── tb_Systolic_Array.vhd  Testbench
+└── docs/
+    ├── pe_output.png
     └── systolic_array_output.png
 ```
 
 ## Tools
 
-VHDL · AMD Xilinx Vivado (or any standard simulator, e.g. ModelSim, GHDL)
+VHDL · AMD Xilinx Vivado (or any standard simulator such as ModelSim, GHDL)
 
-## Getting Started (Vivado)
+## Running Each Project (Vivado)
 
-1. Create a new project, select your target FPGA part.
-2. **Design Sources:** add all files from `src/`; set `systolic_array.vhd` as the Top Module.
-3. **Simulation Sources:** add all files from `sim/`. Keep testbenches out of Design Sources.
-4. Set `pe_cell_tb.vhd` or `systolic_array_tb.vhd` as the simulation top, then **Run → Run Behavioral Simulation**.
+Each folder is a self-contained project — create a separate Vivado project for each:
+
+**PE**
+1. Add `PE.vhd` as Design Source (Top Module), `tb_PE.vhd` as Simulation Source.
+2. Run Behavioral Simulation.
+
+**Systolic_Array**
+1. Add `Systolic_Cell.vhd` and `Systolic_Array.vhd` as Design Sources; set `Systolic_Array.vhd` as Top Module.
+2. Add `tb_Systolic_Array.vhd` as Simulation Source.
+3. Run Behavioral Simulation.
 
 ## Using This Code With Your Own Values
 
-To test different matrices or operands, edit the input and expected-output
-values directly in the testbench files (`sim/`) — no changes needed in `src/`.
+To test different operands, edit the input and expected-output values
+directly in the testbench files — no changes needed in the design files.
 
 ## Simulation Results
 
-**PE cell** — `pe_cell_tb.vhd` applies known operand pairs and confirms correct multiply-accumulate output before integration.
+**PE** — `tb_PE.vhd` applies known operand pairs and confirms correct multiply-accumulate output.
 
-**Systolic array** — `systolic_array_tb.vhd` applies two input matrices and checks all four output products (C11–C22) against hand-calculated reference values, cycle by cycle. Result: 100% match, correct pipelined timing confirmed.
+**Systolic array** — `tb_Systolic_Array.vhd` applies two 2×2 input
+matrices and checks all four output products (C11–C22) against
+hand-calculated reference values, cycle by cycle. Result: 100% match,
+correct pipelined timing confirmed.
 
 ## What This Demonstrates
 
-- Bottom-up RTL design: unit-level verification before system integration
-- Self-checking testbenches at both cell and array level
+- RTL design and verification at both the unit and system level
+- Self-checking testbenches
 - Verification against a golden/reference model
