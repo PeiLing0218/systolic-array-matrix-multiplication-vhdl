@@ -4,7 +4,7 @@ A 2×2 systolic array for matrix multiplication, built from a reusable
 processing-element (PE) cell. Verified in Vivado at both the cell and
 array level against hand-calculated reference values.
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 systolic-array-matrix-mult/
@@ -21,31 +21,27 @@ systolic-array-matrix-mult/
     └── systolic_array_output.png
 ```
 
-## 🛠️ Tools
+## Tools
 
 VHDL · AMD Xilinx Vivado (or any standard simulator, e.g. ModelSim, GHDL)
 
-## 🚀 Getting Started (Vivado)
+## Getting Started (Vivado)
 
 1. Create a new project, select your target FPGA part.
 2. **Design Sources:** add all files from `src/`; set `systolic_array.vhd` as the Top Module.
 3. **Simulation Sources:** add all files from `sim/`. Keep testbenches out of Design Sources.
 4. Set `pe_cell_tb.vhd` or `systolic_array_tb.vhd` as the simulation top, then **Run → Run Behavioral Simulation**.
 
-## 🔧 Using This Code With Your Own Values
+## Using This Code With Your Own Values
 
 To test different matrices or operands, edit the input and expected-output
 values directly in the testbench files (`sim/`) — no changes needed in `src/`.
 
-## 📊 Simulation Results
+## Simulation Results
 
 **PE cell** — `pe_cell_tb.vhd` applies known operand pairs and confirms correct multiply-accumulate output before integration.
 
-![PE cell simulation output](docs/pe_cell_output.png)
-
 **Systolic array** — `systolic_array_tb.vhd` applies two input matrices and checks all four output products (C11–C22) against hand-calculated reference values, cycle by cycle. Result: 100% match, correct pipelined timing confirmed.
-
-![Systolic array simulation output](docs/systolic_array_output.png)
 
 ## What This Demonstrates
 
