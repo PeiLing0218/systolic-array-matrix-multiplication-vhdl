@@ -8,7 +8,7 @@ run and verified as independent Vivado projects:
 2. **Systolic_Array** — a 2×2 systolic array built from a wider (16-bit)
    `Systolic_Cell` variant, verified as a complete pipelined array.
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 systolic-array-matrix-mult/
